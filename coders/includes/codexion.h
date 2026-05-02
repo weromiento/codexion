@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:39:15 by romgutie          #+#    #+#             */
-/*   Updated: 2026/05/02 20:26:34 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/05/02 22:57:20 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,8 @@ typedef struct s_sim
 	pthread_mutex_t	log_mutex;
 	pthread_mutex_t	state_mutex;
 }	t_sim;
+
+long long	get_time(void);
+int	is_sim_over(t_sim *sim);
 
 #endif
