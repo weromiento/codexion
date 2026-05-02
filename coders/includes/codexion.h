@@ -1,4 +1,89 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   codexion.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/30 13:39:15 by romgutie          #+#    #+#             */
+/*   Updated: 2026/05/02 20:26:34 by romgutie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CODEXION_H
 # define CODEXION_H
+
+# include <pthread.h>
+# include <sys/time.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
+
+typedef long long		t_ms;
+typedef struct s_sim	t_sim;
+typedef struct s_dongle	t_dongle;
+
+typedef enum e_scheduler
+{
+	FIFO,
+	EDF
+}	t_scheduler;
+
+typedef struct s_request
+{
+	int		coder_id;
+	t_ms	arrival_ms;
+	t_ms	deadline_ms;
+}	t_request;
+
+typedef struct s_pqueue
+{
+	t_request	*data;
+	int			size;
+	int			capacity;
+	t_scheduler	scheduler;
+}	t_pqueue;
+
+typedef struct s_dongle
+{
+	int				id;
+	pthread_mutex_t	mutex;
+	pthread_cond_t	cond;
+	t_ms			available_at;
+	t_pqueue		*queue;
+}	t_dongle;
+
+typedef struct s_coder
+{
+	int			id;
+	int			compile_count;
+	t_ms		last_compile_ms;
+	int			burned_out;
+	t_dongle	*left;
+	t_dongle	*right;
+	t_sim		*sim;
+	pthread_t	thread;
+}	t_coder;
+
+typedef struct s_sim
+{
+	int				nb_coders;
+	t_ms			time_to_burnout;
+	t_ms			time_to_compile;
+	t_ms			time_to_debug;
+	t_ms			time_to_refactor;
+	int				nb_compiles_required;
+	t_ms			dongle_cooldown;
+	t_scheduler		scheduler;
+	int				simulation_over;
+	t_ms			start_ms;
+	t_coder			*coders;
+	t_dongle		*dongles;
+	pthread_t		*threads;
+	pthread_t		monitor;
+	pthread_mutex_t	log_mutex;
+	pthread_mutex_t	state_mutex;
+}	t_sim;
 
 #endif
