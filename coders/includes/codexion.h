@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:39:15 by romgutie          #+#    #+#             */
-/*   Updated: 2026/05/02 22:57:20 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/05/02 23:44:09 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_sim
 }	t_sim;
 
 long long	get_time(void);
-int	is_sim_over(t_sim *sim);
+int			is_sim_over(t_sim *sim);
+int			init_sim(t_sim *sim, int ac, char **av);
 
 #endif
