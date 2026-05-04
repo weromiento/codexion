@@ -56,14 +56,15 @@ typedef struct s_dongle
 
 typedef struct s_coder
 {
-	int			id;
-	int			compile_count;
-	t_ms		last_compile_ms;
-	int			burned_out;
-	t_dongle	*left;
-	t_dongle	*right;
-	t_sim		*sim;
-	pthread_t	thread;
+	int				id;
+	int				compile_count;
+	pthread_mutex_t	compile_mutex;
+	t_ms			last_compile_ms;
+	int				burned_out;
+	t_dongle		*left;
+	t_dongle		*right;
+	t_sim			*sim;
+	pthread_t		thread;
 }	t_coder;
 
 typedef struct s_sim
@@ -89,5 +90,8 @@ typedef struct s_sim
 long long	get_time(void);
 int			is_sim_over(t_sim *sim);
 int			init_sim(t_sim *sim, int ac, char **av);
+t_sim		*init_t_sim(int ac, char **av);
+int			init_dongles(t_sim *sim);
+void		init_coders(t_sim *sim);
 
 #endif

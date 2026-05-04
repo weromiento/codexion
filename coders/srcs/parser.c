@@ -60,7 +60,7 @@ static int	parse_int(char *s)
 int	init_sim(t_sim *sim, int ac, char **av)
 {
 	if (!args_is_ok(ac, av))
-		return (printf("Invalid arguments\n"), 1);
+		return (fprintf(stderr, "Invalid arguments\n"), 1);
 	sim->nb_coders = parse_int(av[1]);
 	sim->time_to_burnout = parse_int(av[2]);
 	sim->time_to_compile = parse_int(av[3]);
