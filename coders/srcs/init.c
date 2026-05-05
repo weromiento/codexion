@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 14:42:25 by romgutie          #+#    #+#             */
-/*   Updated: 2026/05/04 15:31:41 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/05/05 14:49:51 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ t_sim	*init_t_sim(int ac, char **av)
 	}
 	sim->start_ms = get_time();
 	if (alloc_and_check_sim(sim) == 1)
+	{
+		free(sim);
 		return (NULL);
+	}
 	return (sim);
 }
 
@@ -61,7 +64,8 @@ void	init_coders(t_sim *sim)
 		sim->coders[i].id = i + 1;
 		sim->coders[i].compile_count = 0;
 		pthread_mutex_init(&sim->coders[i].compile_mutex, NULL);
-		sim->coders[i].last_compile_ms = 0;
+		sim->coders[i].last_compile_ms = sim->start_ms;
+		sim->coders[i].burned_out = 0;
 		sim->coders[i].left = &sim->dongles[i];
 		sim->coders[i].right = &sim->dongles[(i + 1) % sim->nb_coders];
 		sim->coders[i].sim = sim;
