@@ -57,7 +57,7 @@ static int	parse_int(char *s)
 	return ((int)n);
 }
 
-int	init_sim(t_sim *sim, int ac, char **av)
+int	parse_sim_args(t_sim *sim, int ac, char **av)
 {
 	if (!args_is_ok(ac, av))
 		return (fprintf(stderr, "Invalid arguments\n"), 1);

@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 14:42:25 by romgutie          #+#    #+#             */
-/*   Updated: 2026/05/05 14:49:51 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/05/06 14:20:52 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static int	alloc_and_check_sim(t_sim *sim)
 	return (0);
 }
 
-t_sim	*init_t_sim(int ac, char **av)
+t_sim	*init_sim(int ac, char **av)
 {
 	t_sim	*sim;
 
 	sim = malloc(sizeof(t_sim));
 	if (!sim)
 		return (NULL);
-	if (init_sim(sim, ac, av) == 1)
+	if (parse_sim_args(sim, ac, av) == 1)
 	{
 		free(sim);
 		return (NULL);

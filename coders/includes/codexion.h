@@ -89,8 +89,8 @@ typedef struct s_sim
 
 long long	get_time(void);
 int			is_sim_over(t_sim *sim);
-int			init_sim(t_sim *sim, int ac, char **av);
-t_sim		*init_t_sim(int ac, char **av);
+int	parse_sim_args(t_sim *sim, int ac, char **av);
+t_sim		*init_sim(int ac, char **av);
 int			init_dongles(t_sim *sim);
 void		init_coders(t_sim *sim);
 
