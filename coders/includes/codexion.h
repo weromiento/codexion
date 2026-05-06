@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:39:15 by romgutie          #+#    #+#             */
-/*   Updated: 2026/05/02 23:44:09 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/05/06 15:12:07 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,13 @@ typedef struct s_sim
 
 long long	get_time(void);
 int			is_sim_over(t_sim *sim);
-int	parse_sim_args(t_sim *sim, int ac, char **av);
+int			parse_sim_args(t_sim *sim, int ac, char **av);
 t_sim		*init_sim(int ac, char **av);
 int			init_dongles(t_sim *sim);
 void		init_coders(t_sim *sim);
+t_pqueue	*init_pqueue(t_scheduler scheduler);
+void		pqueue_destroy(t_pqueue *queue);
+void		destroy_pqueue(t_pqueue *queue);
+int			resize_pqueue(t_pqueue *queue, pthread_mutex_t *mutex);
 
 #endif

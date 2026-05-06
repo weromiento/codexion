@@ -73,25 +73,29 @@ void	init_coders(t_sim *sim)
 	}
 }
 
-static void	cleanup(t_sim *sim, int nb_dongles_init)
+void	cleanup(t_sim *sim, int count)
 {
 	int	i;
 
 	i = 0;
-	while (i < nb_dongles_init)
+	while (i < count)
 	{
 		pthread_mutex_destroy(&sim->dongles[i].mutex);
 		pthread_cond_destroy(&sim->dongles[i].cond);
 		if (sim->dongles[i].queue)
 		{
-			free(sim->dongles[i].queue->data);
+			if (sim->dongles[i].queue->data)
+				free(sim->dongles[i].queue->data);
 			free(sim->dongles[i].queue);
 		}
 		i++;
 	}
-	free(sim->coders);
-	free(sim->dongles);
-	free(sim->threads);
+	if (sim->coders)
+		free(sim->coders);
+	if (sim->dongles)
+		free(sim->dongles);
+	if (sim->threads)
+		free(sim->threads);
 	free(sim);
 }
 
@@ -103,26 +107,15 @@ int	init_dongles(t_sim *sim)
 	while (i < sim->nb_coders)
 	{
 		sim->dongles[i].id = i;
-		pthread_mutex_init(&sim->dongles[i].mutex, NULL);
-		pthread_cond_init(&sim->dongles[i].cond, NULL);
 		sim->dongles[i].available_at = 0;
-		sim->dongles[i].queue = malloc(sizeof(t_pqueue));
+		sim->dongles[i].queue = NULL;
+		if (pthread_mutex_init(&sim->dongles[i].mutex, NULL) != 0)
+			return (cleanup(sim, i), 1);
+		if (pthread_cond_init(&sim->dongles[i].cond, NULL) != 0)
+			return (cleanup(sim, i + 1), 1);
+		sim->dongles[i].queue = init_pqueue(sim->scheduler);
 		if (!sim->dongles[i].queue)
-		{
-			cleanup(sim, i);
-			return (1);
-		}
-		sim->dongles[i].queue->data = malloc(sizeof(t_request) * 16);
-		if (!sim->dongles[i].queue->data)
-		{
-			free(sim->dongles[i].queue);
-			sim->dongles[i].queue = NULL;
-			cleanup(sim, i);
-			return (1);
-		}
-		sim->dongles[i].queue->size = 0;
-		sim->dongles[i].queue->capacity = 16;
-		sim->dongles[i].queue->scheduler = sim->scheduler;
+			return (cleanup(sim, i + 1), 1);
 		i++;
 	}
 	return (0);

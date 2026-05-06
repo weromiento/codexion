@@ -6,7 +6,8 @@ INCS_DIR = coders/includes
 SRCS_DIR = coders/srcs
 OBJS_DIR = objs
 
-SRCS = $(SRCS_DIR)/main.c $(SRCS_DIR)/utils.c $(SRCS_DIR)/parser.c $(SRCS_DIR)/init.c
+SRCS = $(SRCS_DIR)/main.c $(SRCS_DIR)/utils.c $(SRCS_DIR)/parser.c $(SRCS_DIR)/init.c \
+	   $(SRCS_DIR)/pqueue.c
 OBJS = $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))
 INCS = -I$(INCS_DIR)
 
