@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:39:15 by romgutie          #+#    #+#             */
-/*   Updated: 2026/05/06 15:12:07 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/05/07 16:04:45 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,11 @@ t_sim		*init_sim(int ac, char **av);
 int			init_dongles(t_sim *sim);
 void		init_coders(t_sim *sim);
 t_pqueue	*init_pqueue(t_scheduler scheduler);
-void		pqueue_destroy(t_pqueue *queue);
 void		destroy_pqueue(t_pqueue *queue);
-int			resize_pqueue(t_pqueue *queue, pthread_mutex_t *mutex);
+int			resize_pqueue(t_pqueue *queue);
+int			has_priority(t_request req_a, t_request req_b, t_scheduler sched);
+void		sift_up(t_pqueue *queue);
+int			pqueue_push(t_pqueue *queue, t_request req);
+void		sift_down(t_pqueue *queue);
 
 #endif

@@ -23,6 +23,10 @@ int	main(int ac, char **av)
 	pthread_mutex_init(&sim->state_mutex, NULL);
 	init_coders(sim);
 	if (init_dongles(sim) == 1)
+	{
+		pthread_mutex_destroy(&sim->log_mutex);
+		pthread_mutex_destroy(&sim->state_mutex);
 		return (1);
+	}
 	return (0);
 }
