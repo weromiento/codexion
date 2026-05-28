@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:30:09 by romgutie          #+#    #+#             */
-/*   Updated: 2026/05/07 14:34:35 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/05/28 11:08:22 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,31 @@ void	sift_down(t_pqueue *queue)
 		i = best;
 	}
 }
-// pqueue_pop(t_pqueue *queue)  retire et retourne la requete prioritaire
-// pqueue_peek(t_pqueue *queue)  regarde la tête sans retirer
-// is_higher_priority -> sift_up -> push -> sift_down -> pop -—> peek.
+
+t_request	pqueue_pop(t_pqueue *queue)
+{
+	t_request	result;
+
+	if (queue->size == 0)
+	{
+		result.coder_id = -1;
+		return (result);
+	}
+	result = queue->data[0];
+	queue->data[0] = queue->data[queue->size - 1];
+	queue->size--;
+	sift_down(queue);
+	return (result);
+}
+
+t_request	pqueue_peek(t_pqueue *queue)
+{
+	t_request	res;
+
+	if (queue->size == 0)
+	{
+		res.coder_id = -1;
+		return (res);
+	}
+	return (queue->data[0]);
+}
