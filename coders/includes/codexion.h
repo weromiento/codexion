@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:39:15 by romgutie          #+#    #+#             */
-/*   Updated: 2026/05/07 16:04:45 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/05/28 11:33:58 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,12 @@ int			has_priority(t_request req_a, t_request req_b, t_scheduler sched);
 void		sift_up(t_pqueue *queue);
 int			pqueue_push(t_pqueue *queue, t_request req);
 void		sift_down(t_pqueue *queue);
+t_request	pqueue_pop(t_pqueue *queue);
+t_request	pqueue_peek(t_pqueue *queue);
+void		*coder_routine(void *arg);
+void		take_dongle(t_coder *coder, t_dongle *dongle);
+void		release_dongle(t_coder *coder, t_dongle *dongle);
+void		*monitor_routine(void *arg);
+void		log_state(t_sim *sim, int coder_id, char *msg);
 
 #endif
