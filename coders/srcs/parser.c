@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/02 23:42:38 by romgutie          #+#    #+#             */
-/*   Updated: 2026/05/02 23:43:35 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/06/04 14:21:22 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	parse_sim_args(t_sim *sim, int ac, char **av)
 	if (sim->nb_coders < 0 || sim->time_to_burnout < 0
 		|| sim->time_to_compile < 0 || sim->time_to_debug < 0
 		|| sim->time_to_refactor < 0 || sim->nb_compiles_required < 0
-		|| sim->dongle_cooldown < 0)
+		|| sim->dongle_cooldown < 0 || sim->nb_coders == 0)
 		return (1);
 	if (strcmp(av[8], "fifo") == 0)
 		sim->scheduler = FIFO;

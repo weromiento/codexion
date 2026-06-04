@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:31:07 by romgutie          #+#    #+#             */
-/*   Updated: 2026/06/01 12:57:33 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/06/04 14:30:26 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	take_dongle(t_coder *coder, t_dongle *dongle)
 
 void	release_dongle(t_coder *coder, t_dongle *dongle)
 {
-	(void)coder;
 	pthread_mutex_lock(&dongle->mutex);
 	dongle->available_at = get_time()
 		+ coder->sim->dongle_cooldown;
@@ -53,6 +52,16 @@ void	*coder_routine(void *arg)
 	t_coder	*coder;
 
 	coder = (t_coder *)arg;
+	if (coder->sim->nb_coders == 1)
+	{
+		coder->last_compile_ms = get_time();
+		while (!is_sim_over(coder->sim))
+		{
+			usleep(1000);
+		}
+		return (NULL);
+	}
+	coder->last_compile_ms = get_time();
 	while (!is_sim_over(coder->sim))
 	{
 		if (coder->id % 2 == 0)

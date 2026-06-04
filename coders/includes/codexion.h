@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:39:15 by romgutie          #+#    #+#             */
-/*   Updated: 2026/05/28 11:33:58 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/06/04 13:42:39 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ void		take_dongle(t_coder *coder, t_dongle *dongle);
 void		release_dongle(t_coder *coder, t_dongle *dongle);
 void		*monitor_routine(void *arg);
 void		log_state(t_sim *sim, int coder_id, char *msg);
+void		cleanup(t_sim *sim, int count);
 
 #endif
