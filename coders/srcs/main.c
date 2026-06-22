@@ -6,16 +6,51 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 13:28:07 by romgutie          #+#    #+#             */
-/*   Updated: 2026/06/04 13:41:25 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/06/22 15:20:37 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/codexion.h"
 
+static int	start_threads(t_sim *sim)
+{
+	int	i;
+
+	i = 0;
+	while (i < sim->nb_coders)
+	{
+		if (pthread_create(&sim->coders[i].thread, NULL,
+				coder_routine, &sim->coders[i]) != 0)
+		{
+			cleanup(sim, i);
+			return (1);
+		}
+		i++;
+	}
+	if (pthread_create(&sim->monitor, NULL, monitor_routine, sim) != 0)
+	{
+		cleanup(sim, i);
+		return (1);
+	}
+	return (0);
+}
+
+static void	join_threads(t_sim *sim)
+{
+	int	i;
+
+	i = 0;
+	while (i < sim->nb_coders)
+	{
+		pthread_join(sim->coders[i].thread, NULL);
+		i++;
+	}
+	pthread_join(sim->monitor, NULL);
+}
+
 int	main(int ac, char **av)
 {
 	t_sim	*sim;
-	int		i;
 
 	sim = init_sim(ac, av);
 	if (!sim)
@@ -29,30 +64,9 @@ int	main(int ac, char **av)
 		pthread_mutex_destroy(&sim->state_mutex);
 		return (1);
 	}
-	i = 0;
-	while (i < sim->nb_coders)
-	{
-		if (pthread_create(&sim->coders[i].thread, NULL,
-				coder_routine, &sim->coders[i]) != 0)
-		{
-			cleanup(sim, i);
-			return (1);
-		}
-		i++;
-	}
-	if (pthread_create(&sim->monitor, NULL,
-			monitor_routine, sim) != 0)
-	{
-		cleanup(sim, i);
+	if (start_threads(sim) != 0)
 		return (1);
-	}
-	i = 0;
-	while (i < sim->nb_coders)
-	{
-		pthread_join(sim->coders[i].thread, NULL);
-		i++;
-	}
-	pthread_join(sim->monitor, NULL);
+	join_threads(sim);
 	cleanup(sim, sim->nb_coders);
 	return (0);
 }
