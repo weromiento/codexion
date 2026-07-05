@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 14:49:25 by romgutie          #+#    #+#             */
-/*   Updated: 2026/06/22 14:49:27 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/07/05 16:06:49 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ int	has_priority(t_request req_a, t_request req_b, t_scheduler sched)
 	if (sched == FIFO)
 		return (req_a.arrival_ms < req_b.arrival_ms);
 	if (sched == EDF)
-		return (req_a.deadline_ms < req_b.deadline_ms);
+	{
+		if (req_a.deadline_ms != req_b.deadline_ms)
+			return (req_a.deadline_ms < req_b.deadline_ms);
+		return (req_a.arrival_ms < req_b.arrival_ms);
+	}
 	return (0);
 }
 
