@@ -41,8 +41,7 @@ void	take_dongle(t_coder *coder, t_dongle *dongle)
 void	release_dongle(t_coder *coder, t_dongle *dongle)
 {
 	pthread_mutex_lock(&dongle->mutex);
-	dongle->available_at = get_time()
-		+ coder->sim->dongle_cooldown;
+	dongle->available_at = get_time() + coder->sim->dongle_cooldown;
 	pthread_cond_broadcast(&dongle->cond);
 	pthread_mutex_unlock(&dongle->mutex);
 }
