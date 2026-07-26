@@ -14,7 +14,8 @@
 
 void	take_dongle(t_coder *coder, t_dongle *dongle)
 {
-	t_request	req;
+	t_request		req;
+	struct timespec	ts;
 
 	pthread_mutex_lock(&dongle->mutex);
 	req.coder_id = coder->id;
@@ -28,19 +29,22 @@ void	take_dongle(t_coder *coder, t_dongle *dongle)
 			pthread_mutex_unlock(&dongle->mutex);
 			return ;
 		}
-		if (dongle->queue->size > 0
+		if (!dongle->held && dongle->queue->size > 0
 			&& pqueue_peek(dongle->queue).coder_id == coder->id
 			&& get_time() >= dongle->available_at)
 			break ;
-		pthread_cond_wait(&dongle->cond, &dongle->mutex);
+		build_deadline(&ts, 5);
+		pthread_cond_timedwait(&dongle->cond, &dongle->mutex, &ts);
 	}
 	pqueue_pop(dongle->queue);
+	dongle->held = 1;
 	pthread_mutex_unlock(&dongle->mutex);
 }
 
 void	release_dongle(t_coder *coder, t_dongle *dongle)
 {
 	pthread_mutex_lock(&dongle->mutex);
+	dongle->held = 0;
 	dongle->available_at = get_time() + coder->sim->dongle_cooldown;
 	pthread_cond_broadcast(&dongle->cond);
 	pthread_mutex_unlock(&dongle->mutex);

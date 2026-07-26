@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 13:28:07 by romgutie          #+#    #+#             */
-/*   Updated: 2026/06/22 15:20:37 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/07/26 16:26:05 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,7 @@ int	main(int ac, char **av)
 	pthread_mutex_init(&sim->state_mutex, NULL);
 	init_coders(sim);
 	if (init_dongles(sim) == 1)
-	{
-		pthread_mutex_destroy(&sim->log_mutex);
-		pthread_mutex_destroy(&sim->state_mutex);
 		return (1);
-	}
 	if (start_threads(sim) != 0)
 		return (1);
 	join_threads(sim);

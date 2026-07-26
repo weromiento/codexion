@@ -28,3 +28,14 @@ int	is_sim_over(t_sim *sim)
 	pthread_mutex_unlock(&sim->state_mutex);
 	return (res);
 }
+
+void	build_deadline(struct timespec *ts, t_ms ms_from_now)
+{
+	struct timeval	tv;
+	t_ms			usec;
+
+	gettimeofday(&tv, NULL);
+	usec = tv.tv_usec + (ms_from_now * 1000);
+	ts->tv_sec = tv.tv_sec + (usec / 1000000);
+	ts->tv_nsec = (usec % 1000000) * 1000;
+}

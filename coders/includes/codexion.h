@@ -51,6 +51,7 @@ typedef struct s_dongle
 	pthread_mutex_t	mutex;
 	pthread_cond_t	cond;
 	t_ms			available_at;
+	int				held;
 	t_pqueue		*queue;
 }	t_dongle;
 
@@ -108,5 +109,6 @@ void		release_dongle(t_coder *coder, t_dongle *dongle);
 void		*monitor_routine(void *arg);
 void		log_state(t_sim *sim, int coder_id, char *msg);
 void		cleanup(t_sim *sim, int count);
+void		build_deadline(struct timespec *ts, t_ms ms_from_now);
 
 #endif

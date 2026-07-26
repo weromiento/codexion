@@ -109,6 +109,7 @@ int	init_dongles(t_sim *sim)
 	{
 		sim->dongles[i].id = i;
 		sim->dongles[i].available_at = 0;
+		sim->dongles[i].held = 0;
 		sim->dongles[i].queue = NULL;
 		if (pthread_mutex_init(&sim->dongles[i].mutex, NULL) != 0)
 			return (cleanup(sim, i), 1);
