@@ -23,13 +23,6 @@ static int	alloc_and_check_sim(t_sim *sim)
 		free(sim->coders);
 		return (1);
 	}
-	sim->threads = malloc(sizeof(pthread_t) * sim->nb_coders);
-	if (!sim->threads)
-	{
-		free(sim->coders);
-		free(sim->dongles);
-		return (1);
-	}
 	return (0);
 }
 
@@ -94,8 +87,6 @@ void	cleanup(t_sim *sim, int count)
 		free(sim->coders);
 	if (sim->dongles)
 		free(sim->dongles);
-	if (sim->threads)
-		free(sim->threads);
 	free(sim);
 }
 
@@ -106,7 +97,6 @@ int	init_dongles(t_sim *sim)
 	i = 0;
 	while (i < sim->nb_coders)
 	{
-		sim->dongles[i].id = i;
 		sim->dongles[i].available_at = 0;
 		sim->dongles[i].held = 0;
 		sim->dongles[i].queue = NULL;

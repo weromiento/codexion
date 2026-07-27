@@ -25,28 +25,6 @@ int	has_priority(t_request req_a, t_request req_b, t_scheduler sched)
 	return (0);
 }
 
-int	resize_pqueue(t_pqueue *queue)
-{
-	t_request	*new_data;
-	int			i;
-
-	if (!queue || !queue->data)
-		return (1);
-	new_data = malloc(sizeof(t_request) * (queue->capacity * 2));
-	if (!new_data)
-		return (1);
-	i = 0;
-	while (i < queue->size)
-	{
-		new_data[i] = queue->data[i];
-		i++;
-	}
-	free(queue->data);
-	queue->data = new_data;
-	queue->capacity *= 2;
-	return (0);
-}
-
 void	sift_up(t_pqueue *queue)
 {
 	int			i;

@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:39:15 by romgutie          #+#    #+#             */
-/*   Updated: 2026/06/04 13:42:39 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/07/27 23:20:17 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct s_pqueue
 
 typedef struct s_dongle
 {
-	int				id;
 	pthread_mutex_t	mutex;
 	pthread_cond_t	cond;
 	t_ms			available_at;
@@ -81,7 +80,6 @@ typedef struct s_sim
 	t_ms			start_ms;
 	t_coder			*coders;
 	t_dongle		*dongles;
-	pthread_t		*threads;
 	pthread_t		monitor;
 	pthread_mutex_t	log_mutex;
 	pthread_mutex_t	state_mutex;
@@ -94,7 +92,6 @@ t_sim		*init_sim(int ac, char **av);
 int			init_dongles(t_sim *sim);
 void		init_coders(t_sim *sim);
 t_pqueue	*init_pqueue(t_scheduler scheduler);
-int			resize_pqueue(t_pqueue *queue);
 int			has_priority(t_request req_a, t_request req_b, t_scheduler sched);
 void		sift_up(t_pqueue *queue);
 int			pqueue_push(t_pqueue *queue, t_request req);

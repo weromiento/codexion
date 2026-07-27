@@ -19,7 +19,7 @@ t_pqueue	*init_pqueue(t_scheduler scheduler)
 	queue = malloc(sizeof(t_pqueue));
 	if (!queue)
 		return (NULL);
-	queue->capacity = 16;
+	queue->capacity = 4;
 	queue->size = 0;
 	queue->scheduler = scheduler;
 	queue->data = malloc(sizeof(t_request) * queue->capacity);
@@ -33,9 +33,6 @@ t_pqueue	*init_pqueue(t_scheduler scheduler)
 
 int	pqueue_push(t_pqueue *queue, t_request req)
 {
-	if (queue->size == queue->capacity)
-		if (resize_pqueue(queue) == 1)
-			return (1);
 	queue->data[queue->size] = req;
 	queue->size++;
 	sift_up(queue);
