@@ -64,7 +64,6 @@ void	init_coders(t_sim *sim)
 		sim->coders[i].id = i + 1;
 		sim->coders[i].compile_count = 0;
 		pthread_mutex_init(&sim->coders[i].compile_mutex, NULL);
-		sim->coders[i].burned_out = 0;
 		sim->coders[i].left = &sim->dongles[i];
 		sim->coders[i].right = &sim->dongles[(i + 1) % sim->nb_coders];
 		sim->coders[i].sim = sim;

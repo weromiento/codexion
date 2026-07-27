@@ -61,7 +61,6 @@ typedef struct s_coder
 	int				compile_count;
 	pthread_mutex_t	compile_mutex;
 	t_ms			last_compile_ms;
-	int				burned_out;
 	t_dongle		*left;
 	t_dongle		*right;
 	t_sim			*sim;
@@ -95,7 +94,6 @@ t_sim		*init_sim(int ac, char **av);
 int			init_dongles(t_sim *sim);
 void		init_coders(t_sim *sim);
 t_pqueue	*init_pqueue(t_scheduler scheduler);
-void		destroy_pqueue(t_pqueue *queue);
 int			resize_pqueue(t_pqueue *queue);
 int			has_priority(t_request req_a, t_request req_b, t_scheduler sched);
 void		sift_up(t_pqueue *queue);

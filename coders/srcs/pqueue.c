@@ -31,14 +31,6 @@ t_pqueue	*init_pqueue(t_scheduler scheduler)
 	return (queue);
 }
 
-void	destroy_pqueue(t_pqueue *queue)
-{
-	if (!queue)
-		return ;
-	free(queue->data);
-	free(queue);
-}
-
 int	pqueue_push(t_pqueue *queue, t_request req)
 {
 	if (queue->size == queue->capacity)
