@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 13:28:07 by romgutie          #+#    #+#             */
-/*   Updated: 2026/07/26 16:26:05 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/07/28 19:10:10 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int ac, char **av)
 	init_coders(sim);
 	if (init_dongles(sim) == 1)
 		return (1);
-	if (start_threads(sim) != 0)
+	if (start_threads(sim) == 1)
 		return (1);
 	join_threads(sim);
 	cleanup(sim, sim->nb_coders);
