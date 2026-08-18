@@ -6,7 +6,7 @@
 /*   By: romgutie <romgutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:31:07 by romgutie          #+#    #+#             */
-/*   Updated: 2026/07/30 14:03:52 by romgutie         ###   ########.fr       */
+/*   Updated: 2026/08/18 11:45:29 by romgutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ void	take_dongle(t_coder *coder, t_dongle *dongle)
 	pthread_mutex_lock(&dongle->mutex);
 	req.coder_id = coder->id;
 	req.arrival_ms = get_time();
-	pthread_mutex_lock(&coder->compile_mutex);
 	req.deadline_ms = coder->last_compile_ms + coder->sim->time_to_burnout;
-	pthread_mutex_unlock(&coder->compile_mutex);
 	pqueue_push(dongle->queue, req);
 	while (1)
 	{
